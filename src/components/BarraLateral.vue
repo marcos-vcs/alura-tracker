@@ -15,22 +15,22 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'BarraLateral',
     emits: ['aoTemaAlterado'],
-    data(){
+    data() {
         return {
             modoEscuroAtivo: false,
         }
     },
     computed: {
-        textoBotao(){
+        textoBotao() {
             const textoBase = 'modo escuro';
-            if(this.modoEscuroAtivo){
+            if (this.modoEscuroAtivo) {
                 return `Desativar ${textoBase}`;
             }
             return `Ativar ${textoBase}`;
         }
     },
     methods: {
-        alterarTema(){
+        alterarTema() {
             this.modoEscuroAtivo = !this.modoEscuroAtivo;
             this.$emit('aoTemaAlterado', this.modoEscuroAtivo);
         }
@@ -39,15 +39,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
-header{
+header {
     text-align: center;
     padding: 1rem;
     background-color: #0d3b66;
     width: 100%;
     height: 100vh;
 }
-@media only screen and (max-width: 768px){
-    header{
+
+@media only screen and (max-width: 768px) {
+    header {
         padding: 2.5rem;
         height: auto;
     }

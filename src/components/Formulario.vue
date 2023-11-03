@@ -21,13 +21,13 @@ export default defineComponent({
     components: {
         TemporizadorComponent,
     },
-    data(){
+    data() {
         return {
             descricao: '',
         }
     },
     methods: {
-        finalizarTarefa(tempoDecorrido: number): void{ 
+        finalizarTarefa(tempoDecorrido: number): void {
             this.$emit('aoSalvarTarefa', {
                 duracaoEmSegundos: tempoDecorrido,
                 descricao: this.descricao
@@ -39,7 +39,7 @@ export default defineComponent({
 </script>
 
 <style>
-.formulario{
+.formulario {
     color: var(--texto-primario);
     background-color: var(--bg-primario);
 }

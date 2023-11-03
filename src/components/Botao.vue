@@ -28,7 +28,7 @@ export default defineComponent({
         },
     },
     methods: {
-        clickBotao(){
+        clickBotao() {
             this.$emit('clickBotao');
         }
     }

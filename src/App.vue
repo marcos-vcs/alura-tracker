@@ -44,7 +44,7 @@ export default defineComponent({
   },
   methods: {
     salvarTarefa(tarefa: ITarefa) {
-      this.tarefas.push(tarefa);
+      this.tarefas.unshift(tarefa);
     },
     trocarTema(modoEscuroAtivo: boolean){
       this.tema = modoEscuroAtivo ? 'modo-escuro' : '';

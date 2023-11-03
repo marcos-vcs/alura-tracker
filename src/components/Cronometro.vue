@@ -24,7 +24,7 @@ export default defineComponent({
 </script>
 
 <style>
-.display{
+.display {
     color: var(--texto-primario);
 }
 </style>

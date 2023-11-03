@@ -1,14 +1,14 @@
 <template>
-<BoxComponent>
-    <div class="columns">
-        <div class="column is-7">
-            {{ dados?.descricao || 'Tarefa sem descrição' }}
+    <BoxComponent>
+        <div class="columns">
+            <div class="column is-7">
+                {{ dados?.descricao || 'Tarefa sem descrição' }}
+            </div>
+            <div class="column">
+                <CronometroComponent :tempo-em-segundos="dados?.duracaoEmSegundos" />
+            </div>
         </div>
-        <div class="column">
-            <CronometroComponent :tempo-em-segundos="dados?.duracaoEmSegundos"/>
-        </div>
-    </div>
-</BoxComponent>
+    </BoxComponent>
 </template>
 
 <script lang="ts">
