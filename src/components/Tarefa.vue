@@ -7,6 +7,11 @@
             <div class="column">
                 <CronometroComponent :tempo-em-segundos="dados?.duracaoEmSegundos" />
             </div>
+            <div class="column">
+                <button class="button" @click="removerTarefa">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
         </div>
     </BoxComponent>
 </template>
@@ -19,6 +24,7 @@ import BoxComponent from './Box.vue';
 
 export default defineComponent({
     name: 'TarefaComponent',
+    emits: ['removerTarefa'],
     props: {
         dados: {
             type: Object as PropType<ITarefa>,
@@ -28,6 +34,11 @@ export default defineComponent({
     components: {
         CronometroComponent,
         BoxComponent,
+    },
+    methods: {
+        removerTarefa(){
+            this.$emit('removerTarefa');
+        }
     }
 })
 </script>

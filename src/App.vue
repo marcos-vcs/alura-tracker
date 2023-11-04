@@ -6,13 +6,18 @@
     <div class="column is-three-quarter conteudo">
       <FormularioSuperiorComponent @aoSalvarTarefa="salvarTarefa" />
       <div class="lista">
-        <TarefaComponent v-for="(tarefa, index) in tarefas" :key="index" :dados="tarefa" />
+        <TarefaComponent
+          v-for="(tarefa, index) in tarefas"
+          :key="index"
+          :dados="tarefa"
+          @removerTarefa="removerTarefa(index)" />
         <BoxComponent v-show="listaEstaVazia">
           Nenhuma atividade executada por enquanto :(
         </BoxComponent>
       </div>
     </div>
   </main>
+
 </template>
 
 <script lang="ts">
@@ -25,10 +30,17 @@ import BoxComponent from './components/Box.vue';
 
 export default defineComponent({
   name: 'App',
+  components: {
+    BarraLateral,
+    FormularioSuperiorComponent,
+    TarefaComponent,
+    BoxComponent,
+  },
   data() {
     return {
       tarefas: [] as ITarefa[],
       tema: '',
+      exibirModal: false,
     }
   },
   created() {
@@ -39,21 +51,29 @@ export default defineComponent({
     } else {
       this.trocarTema(modoAtual === 'true');
     }
+    this.recuperarListaTarefas();
   },
   computed: {
     listaEstaVazia(): boolean {
       return this.tarefas.length === 0;
     }
   },
-  components: {
-    BarraLateral,
-    FormularioSuperiorComponent,
-    TarefaComponent,
-    BoxComponent,
-  },
   methods: {
+    recuperarListaTarefas() {
+      const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
+      console.log(tarefas);
+      this.tarefas = tarefas;
+    },
     salvarTarefa(tarefa: ITarefa) {
       this.tarefas.unshift(tarefa);
+      console.log(this.tarefas.toString())
+      localStorage.setItem('tarefas', JSON.stringify(this.tarefas));
+    },
+    removerTarefa(index: number) {
+      if(index > -1){
+        this.tarefas.splice(index, 1);
+        localStorage.setItem('tarefas', JSON.stringify(this.tarefas));
+      }
     },
     trocarTema(modoEscuroAtivo: boolean) {
       this.tema = modoEscuroAtivo ? 'modo-escuro' : '';
