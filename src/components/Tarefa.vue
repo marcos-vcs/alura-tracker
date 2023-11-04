@@ -5,7 +5,7 @@
                 {{ dados?.descricao || 'Tarefa sem descrição' }}
             </div>
             <div class="column">
-                <CronometroComponent :tempo-em-segundos="dados?.duracaoEmSegundos" />
+                <CronometroComponent :habilitarModoEscuro="false" :tempo-em-segundos="dados?.duracaoEmSegundos" />
             </div>
             <div class="column">
                 <button class="button" @click="removerTarefa">
@@ -36,7 +36,7 @@ export default defineComponent({
         BoxComponent,
     },
     methods: {
-        removerTarefa(){
+        removerTarefa() {
             this.$emit('removerTarefa');
         }
     }
