@@ -22,19 +22,10 @@ export default defineComponent({
             modoEscuroAtivo: false,
         }
     },
-    computed: {
-        textoBotao() {
-            const textoBase = 'modo escuro';
-            if (this.modoEscuroAtivo) {
-                return `Desativar ${textoBase}`;
-            }
-            return `Ativar ${textoBase}`;
-        }
-    },
     methods: {
-        alterarTema() {
-            this.modoEscuroAtivo = !this.modoEscuroAtivo;
-            this.$emit('aoTemaAlterado', this.modoEscuroAtivo);
+        alterarTema(modoEscuroAtivo: boolean): void {
+            this.modoEscuroAtivo = modoEscuroAtivo;
+            this.$emit('aoTemaAlterado', modoEscuroAtivo);
         }
     }
 })

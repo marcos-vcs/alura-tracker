@@ -9,7 +9,7 @@
         <TarefaComponent v-for="(tarefa, index) in tarefas" :key="index" :dados="tarefa" />
         <BoxComponent v-show="listaEstaVazia">
           Nenhuma atividade executada por enquanto :(
-        </BoxComponent> 
+        </BoxComponent>
       </div>
     </div>
   </main>
@@ -31,8 +31,17 @@ export default defineComponent({
       tema: '',
     }
   },
+  created() {
+    const modoAtual = localStorage.getItem('modo-escuro');
+    if (modoAtual === '' || modoAtual === undefined || modoAtual === null) {
+      localStorage.setItem('modo-escuro', 'false');
+      this.trocarTema(false);
+    } else {
+      this.trocarTema(modoAtual === 'true');
+    }
+  },
   computed: {
-    listaEstaVazia(): boolean{
+    listaEstaVazia(): boolean {
       return this.tarefas.length === 0;
     }
   },
@@ -46,8 +55,9 @@ export default defineComponent({
     salvarTarefa(tarefa: ITarefa) {
       this.tarefas.unshift(tarefa);
     },
-    trocarTema(modoEscuroAtivo: boolean){
+    trocarTema(modoEscuroAtivo: boolean) {
       this.tema = modoEscuroAtivo ? 'modo-escuro' : '';
+      localStorage.setItem('modo-escuro', modoEscuroAtivo.toString());
     },
   }
 });
@@ -57,15 +67,17 @@ export default defineComponent({
 .lista {
   padding: 1.25rem;
 }
+
 main {
   --bg-primario: #fff;
   --texto-primario: #000;
 }
+
 main.modo-escuro {
   --bg-primario: #2b2d42;
   --texto-primario: #ddd;
 }
-.conteudo{
+
+.conteudo {
   background-color: var(--bg-primario);
-}
-</style>
+}</style>

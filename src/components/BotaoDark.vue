@@ -17,15 +17,18 @@ export default defineComponent({
             isChecked: false,
         };
     },
+    created() {
+        const modoAtual = localStorage.getItem('modo-escuro');
+        this.isChecked = modoAtual === 'true';
+    },
     watch: {
         isChecked() {
-            this.alterarTema();
+            this.alterarTema(this.isChecked);
         }
-
     },
     methods: {
-        alterarTema() {
-            this.$emit('alterarTema');
+        alterarTema(checked: boolean): void {
+            this.$emit('alterarTema', checked);
         },
         toggleTheme() {
             this.isChecked = !this.isChecked;
@@ -89,4 +92,5 @@ i.flip {
 
 .fa-moon {
     color: gray;
-}</style>
+}
+</style>
