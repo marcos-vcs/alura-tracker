@@ -1,7 +1,7 @@
 <template>
   <main class="columns is-gapless is-multiline" :class="tema">
     <div class="column is-one-quarter">
-      <BarraLateral @aoTemaAlterado="trocarTema"></BarraLateral>
+      <BarraLateral :jsonExportacao="tarefas" @aoTemaAlterado="trocarTema"></BarraLateral>
     </div>
     <div class="column is-three-quarter conteudo">
       <FormularioSuperiorComponent @aoSalvarTarefa="salvarTarefa" />
@@ -61,12 +61,10 @@ export default defineComponent({
   methods: {
     recuperarListaTarefas() {
       const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
-      console.log(tarefas);
       this.tarefas = tarefas;
     },
     salvarTarefa(tarefa: ITarefa) {
       this.tarefas.unshift(tarefa);
-      console.log(this.tarefas.toString())
       localStorage.setItem('tarefas', JSON.stringify(this.tarefas));
     },
     removerTarefa(index: number) {
