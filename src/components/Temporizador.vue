@@ -1,8 +1,16 @@
 <template>
     <div class="is-flex is-align-items-center is-justify-content-space-between">
         <CronometroComponent :tempoEmSegundos="tempoEmSegundos" />
-        <BotaoComponent :icone="'fas fa-play'" :desabilitar="cronometroRodando" :rotulo="'play'" @clickBotao="iniciar" />
-        <BotaoComponent :icone="'fas fa-stop'" :desabilitar="!cronometroRodando" :rotulo="'stop'" @clickBotao="finalizar" />
+        <BotaoComponent
+            :icone="'fas fa-play'"
+            :desabilitar="cronometroRodando"
+            :rotulo="$t('play_temporizador')"
+            @clickBotao="iniciar" />
+        <BotaoComponent
+            :icone="'fas fa-stop'"
+            :desabilitar="!cronometroRodando"
+            :rotulo="$t('stop_temporizador')"
+            @clickBotao="finalizar" />
     </div>
 </template>
 

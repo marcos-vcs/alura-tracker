@@ -1,0 +1,14 @@
+{
+    "pt": "Português",
+    "en": "Inglês",
+    "es": "Espanhol",
+    "selecione_idioma": "Selecione o idioma",
+    "exportar_tarefas": "Exportar tarefas",
+    "placeholder_nova_tarefa": "Qual tarefa você deseja iniciar?",
+    "aria_label_formulario": "Formulário para a criação de uma nova tarefa",
+    "play_temporizador": "Iniciar",
+    "stop_temporizador": "Parar",
+    "tarefa_sem_descricao": "Tarefa sem descrição",
+    "alt_logo": "Logo da página",
+    "sem_tarefas": "Nenhuma atividade executada por enquanto :("
+}

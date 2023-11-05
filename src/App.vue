@@ -1,7 +1,7 @@
 <template>
   <main class="columns is-gapless is-multiline" :class="tema">
     <div class="column is-one-quarter">
-      <BarraLateral :jsonExportacao="tarefas" @aoTemaAlterado="trocarTema"></BarraLateral>
+      <BarraLateral :jsonExportacao="tarefas" @aoTemaAlterado="trocarTema"/>
     </div>
     <div class="column is-three-quarter conteudo">
       <FormularioSuperiorComponent @aoSalvarTarefa="salvarTarefa" />
@@ -12,7 +12,7 @@
           :dados="tarefa"
           @removerTarefa="removerTarefa(index)" />
         <BoxComponent v-show="listaEstaVazia">
-          Nenhuma atividade executada por enquanto :(
+          {{ $t('sem_tarefas') }}
         </BoxComponent>
       </div>
     </div>

@@ -1,0 +1,14 @@
+{
+    "pt": "Portuguese",
+    "en": "English",
+    "es": "Spanish",
+    "selecione_idioma": "Select the language",
+    "exportar_tarefas": "Export tasks",
+    "placeholder_nova_tarefa": "What task do you want to start?",
+    "aria_label_formulario": "Form for creating a new task",
+    "play_temporizador": "Play",
+    "stop_temporizador": "Stop",
+    "tarefa_sem_descricao": "Task without description",
+    "alt_logo": "Page logo",
+    "sem_tarefas": "No activities performed yet :("
+}

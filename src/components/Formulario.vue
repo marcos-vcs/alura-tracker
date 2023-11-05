@@ -1,8 +1,12 @@
 <template>
     <div class="box formulario">
         <div class="columns">
-            <div class="column is-8" role="form" aria-label="Formulário para a criação de uma nova tarefa">
-                <input type="text" v-model="descricao" class="input" placeholder="Qual tarefa você deseja iniciar?">
+            <div class="column is-8" role="form" :aria-label="$t('aria_label_formulario')">
+                <input
+                    type="text"
+                    v-model="descricao"
+                    class="input"
+                    :placeholder="$t('placeholder_nova_tarefa')">
             </div>
             <div class="column">
                 <TemporizadorComponent @ao-temporizador-finalizado="finalizarTarefa"/>

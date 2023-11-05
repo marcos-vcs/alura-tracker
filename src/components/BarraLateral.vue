@@ -1,12 +1,13 @@
 <template>
     <header>
         <h1>
-            <img src="../assets/logo.png" alt="">
+            <img src="../assets/logo.png" :alt="$t('alt_logo')">
         </h1>
+        <AlterarIdioma/>
         <ExportarParaCsvComponent
             :desabilitar="!exibirBotaoExportar"
             :json="jsonExportacao"
-            :texto-botao="'Exportar tarefas'"
+            :texto-botao="$t('exportar_tarefas')"
             :titulo-csv="nomeArquivoCsv" />
         <BotaoDarkComponent class="btn-dark" @alterar-tema="alterarTema" />
     </header>
@@ -16,13 +17,14 @@
 import { defineComponent } from 'vue';
 import BotaoDarkComponent from './BotaoDark.vue';
 import ExportarParaCsvComponent from './ExportarParaCsv.vue';
-
+import AlterarIdioma from './AlteraIdioma.vue'
 export default defineComponent({
     name: 'BarraLateral',
     emits: ['aoTemaAlterado'],
     components: {
         BotaoDarkComponent,
         ExportarParaCsvComponent,
+        AlterarIdioma,
     },
     props: {
         jsonExportacao: {

@@ -2,10 +2,12 @@
     <BoxComponent>
         <div class="columns">
             <div class="column is-7">
-                {{ dados?.descricao || 'Tarefa sem descrição' }}
+                {{ dados?.descricao || $t('tarefa_sem_descricao') }}
             </div>
             <div class="column">
-                <CronometroComponent :habilitarModoEscuro="false" :tempo-em-segundos="dados?.duracaoEmSegundos" />
+                <CronometroComponent
+                    :habilitarModoEscuro="false"
+                    :tempo-em-segundos="dados?.duracaoEmSegundos" />
             </div>
             <div class="column">
                 <button class="button" @click="removerTarefa">
