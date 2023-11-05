@@ -27,6 +27,7 @@ import FormularioSuperiorComponent from './components/Formulario.vue';
 import TarefaComponent from './components/Tarefa.vue';
 import ITarefa from './interfaces/ITarefa';
 import BoxComponent from './components/Box.vue';
+import { alterarIdioma } from '@/services/idiomaService';
 
 export default defineComponent({
   name: 'App',
@@ -52,6 +53,7 @@ export default defineComponent({
       this.trocarTema(modoAtual === 'true');
     }
     this.recuperarListaTarefas();
+    this.recuperarIdiomaVigente();
   },
   computed: {
     listaEstaVazia(): boolean {
@@ -62,6 +64,10 @@ export default defineComponent({
     recuperarListaTarefas() {
       const tarefas = JSON.parse(localStorage.getItem('tarefas') || '[]');
       this.tarefas = tarefas;
+    },
+    recuperarIdiomaVigente(){
+      const idioma = localStorage.getItem('idioma') || 'pt';
+      alterarIdioma(idioma);
     },
     salvarTarefa(tarefa: ITarefa) {
       this.tarefas.unshift(tarefa);
