@@ -10,6 +10,23 @@
             :texto-botao="$t('exportar_tarefas')"
             :titulo-csv="nomeArquivoCsv" />
         <BotaoDarkComponent class="btn-dark" @alterar-tema="alterarTema" />
+
+        <nav class="panel mt-6 has-text-left">
+            <ul>
+                <li>
+                    <router-link to="/" class="link">
+                        <li class="fas fa-tasks"></li>
+                        tarefas
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/projetos" class="link">
+                        <i class="fas fa-project-diagram"></i>
+                        projetos
+                    </router-link>
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
@@ -18,6 +35,7 @@ import { defineComponent } from 'vue';
 import BotaoDarkComponent from './BotaoDark.vue';
 import ExportarParaCsvComponent from './ExportarParaCsv.vue';
 import AlterarIdioma from './AlteraIdioma.vue'
+
 export default defineComponent({
     name: 'BarraLateral',
     emits: ['aoTemaAlterado'],
@@ -82,5 +100,21 @@ header {
         padding: 2.5rem;
         height: auto;
     }
+}
+
+.panel {
+    padding: 5px 10px;
+}
+.panel li {
+    margin: 8px 0;
+}
+.link {
+    color: #fff;
+}
+.link:hover {
+    color: #FAF0CA;
+}
+.link.router-link-active {
+    color: #FAF0CA;
 }
 </style>
