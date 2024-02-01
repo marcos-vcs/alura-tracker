@@ -20,8 +20,8 @@
 import { defineComponent } from 'vue';
 import { useStore } from '@/store/index';
 import useNotificar from '@/hooks/notificador'
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/tipo-mutacoes';
 import { TipoNotificacao } from '@/interfaces/INotificacao';
+import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from '@/store/tipo-acoes';
 
 export default defineComponent({
     name: 'FormularioView',
@@ -52,21 +52,24 @@ export default defineComponent({
     methods: {
         salvar(){
             if(this.id){
-                this.store.commit(ALTERA_PROJETO, {
+                this.store.dispatch(ALTERAR_PROJETOS, {
                     id: this.id,
                     nome: this.nomeDoProjeto
-                })
-                this.$router.push('/projetos');
+                }).then(() => this.sucessoNaRequisicao())
             }else{
-                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
-                this.nomeDoProjeto = '';
-                this.notificar(
-                    TipoNotificacao.SUCESSO,
-                    'Novo projeto foi salvo',
-                    'Seu projeto já está disponível.'
-                );
-                this.$router.push('/projetos');
+                this.store.dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto).then(() => {
+                    this.sucessoNaRequisicao();
+                });
             }
+        },
+        sucessoNaRequisicao(){
+            this.nomeDoProjeto = '';
+                    this.notificar(
+                        TipoNotificacao.SUCESSO,
+                        'Novo projeto foi salvo',
+                        'Seu projeto já está disponível.'
+                    );
+                    this.$router.push('/projetos');
         }
     }
 })
