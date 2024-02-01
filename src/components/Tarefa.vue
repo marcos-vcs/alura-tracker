@@ -1,8 +1,11 @@
 <template>
     <BoxComponent>
         <div class="columns">
-            <div class="column is-7">
+            <div class="column is-4">
                 {{ dados?.descricao || $t('tarefa_sem_descricao') }}
+            </div>
+            <div class="column is-3">
+                {{ dados?.projeto?.nome || 'N/D' }}
             </div>
             <div class="column">
                 <CronometroComponent

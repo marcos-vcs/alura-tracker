@@ -1,5 +1,5 @@
 <template>
-    <FormularioSuperiorComponent @aoSalvarTarefa="salvarTarefa" />
+    <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
     <div class="lista">
         <TarefaComponent v-for="(tarefa, index) in tarefas" :key="index" :dados="tarefa"
             @removerTarefa="removerTarefa(index)" />
@@ -11,7 +11,7 @@
   
 <script lang="ts">
 import { defineComponent } from 'vue';
-import FormularioSuperiorComponent from '../components/Formulario.vue';
+import FormularioTarefa from '../components/Formulario.vue';
 import TarefaComponent from '../components/Tarefa.vue';
 import ITarefa from '../interfaces/ITarefa';
 import BoxComponent from '../components/Box.vue';
@@ -19,7 +19,7 @@ import BoxComponent from '../components/Box.vue';
 export default defineComponent({
     name: 'tarefasView',
     components: {
-        FormularioSuperiorComponent,
+        FormularioTarefa,
         TarefaComponent,
         BoxComponent,
     },
