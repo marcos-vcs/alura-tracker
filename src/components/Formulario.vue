@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="column">
-                <TemporizadorComponent @ao-temporizador-finalizado="finalizarTarefa" />
+                <TemporizadorComponent @ao-temporizador-finalizado="finalizarTarefa($event)" />
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@ export default defineComponent({
         return {
             store,
             projetos: computed(
-                () => store.state.projetos
+                () => store.state.projeto.projetos
             )
         }
     },

@@ -1,0 +1,11 @@
+:root{
+    --red: #D24545;
+    --orange: #FFDD95;
+}
+.bg-red{
+    background-color: var(--red);
+}
+
+.bg-orange{
+    background-color: var(--orange);
+}

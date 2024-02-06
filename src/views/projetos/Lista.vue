@@ -46,11 +46,11 @@ export default defineComponent({
     name: 'ListaView',
     setup() {
         const store = useStore();
-        store.dispatch(OBTER_PROJETOS)
+        store.dispatch(OBTER_PROJETOS);
         return {
             store,
             projetos: computed(
-                () => store.state.projetos
+                () => store.state.projeto.projetos
             )
         }
     },

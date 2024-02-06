@@ -13,7 +13,10 @@
                     :tempo-em-segundos="dados?.duracaoEmSegundos" />
             </div>
             <div class="column">
-                <button class="button" @click="removerTarefa">
+                <button class="button" @click="abrirModalEditarTarefa()">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="button ml-2 is-danger" @click="removerTarefa">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -29,7 +32,7 @@ import BoxComponent from './Box.vue';
 
 export default defineComponent({
     name: 'TarefaComponent',
-    emits: ['removerTarefa'],
+    emits: ['aoTarefaClicada','removerTarefa'],
     props: {
         dados: {
             type: Object as PropType<ITarefa>,
@@ -41,8 +44,11 @@ export default defineComponent({
         BoxComponent,
     },
     methods: {
-        removerTarefa() {
+        removerTarefa(): void {
             this.$emit('removerTarefa');
+        },
+        abrirModalEditarTarefa(): void {
+            this.$emit('aoTarefaClicada', this.dados)
         }
     }
 })
