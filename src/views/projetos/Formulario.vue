@@ -17,11 +17,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useStore } from '@/store/index';
-import useNotificar from '@/hooks/notificador'
+import useNotificar from '@/hooks/notificador';
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from '@/store/tipo-acoes';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'FormularioView',
@@ -30,46 +31,43 @@ export default defineComponent({
             type: String
         }
     },
-    mounted(){
-        if(this.id){
-            const projeto = this.store.state.projeto.projetos.find(proj => proj.id == this.id)
-            this.nomeDoProjeto = projeto?.nome || '';
-        }
-    },
-    setup(){
-        const { notificar } = useNotificar()
+    setup(props){
+        const router = useRouter();
+        const { notificar } = useNotificar();
         const store = useStore();
-        return {
-            notificar,
-            store
+        const nomeDoProjeto = ref('');
+
+        if(props.id){
+            const projeto = store.state.projeto.projetos.find(proj => proj.id == props.id)
+            nomeDoProjeto.value = projeto?.nome || '';
         }
-    },
-    data() {
-        return {
-            nomeDoProjeto: '',
-        }
-    },
-    methods: {
-        salvar(){
-            if(this.id){
-                this.store.dispatch(ALTERAR_PROJETOS, {
-                    id: this.id,
-                    nome: this.nomeDoProjeto
-                }).then(() => this.sucessoNaRequisicao())
-            }else{
-                this.store.dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto).then(() => {
-                    this.sucessoNaRequisicao();
-                });
-            }
-        },
-        sucessoNaRequisicao(){
-            this.nomeDoProjeto = '';
-                    this.notificar(
+
+        const sucessoNaRequisicao = () => {
+            nomeDoProjeto.value = '';
+                    notificar(
                         TipoNotificacao.SUCESSO,
                         'Novo projeto foi salvo',
                         'Seu projeto já está disponível.'
                     );
-                    this.$router.push('/projetos');
+                    router.push('/projetos');
+        }
+
+        const salvar = () => {
+            if(props.id){
+                store.dispatch(ALTERAR_PROJETOS, {
+                    id: props.id,
+                    nome: nomeDoProjeto.value
+                }).then(() => sucessoNaRequisicao())
+            }else{
+                store.dispatch(CADASTRAR_PROJETOS, nomeDoProjeto.value).then(() => {
+                    sucessoNaRequisicao();
+                });
+            }
+        }
+
+        return {
+            salvar,
+            nomeDoProjeto
         }
     }
 })

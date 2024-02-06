@@ -7,39 +7,36 @@
             {{ $t('sem_tarefas') }}
         </BoxComponent>
     </div>
-    <div class="modal" :class="{'is-active' : tarefaSelecionada}" v-if="tarefaSelecionada">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Editar tarefa</p>
-                <button class="delete" aria-label="close" @click="fecharModalEdicao()"></button>
-            </header>
-            <section class="modal-card-body">
-                <div class="field">
-                    <label for="descricaoTarefa" class="label">
-                        Descrição
-                    </label>
-                    <input type="text" class="input" v-model="tarefaSelecionada.descricao" id="descricaoTarefa">
-                </div>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-success" @click="alterarTarefa()">Salvar alterações</button>
-                <button class="button" @click="fecharModalEdicao()">Cancelar</button>
-            </footer>
-        </div>
-    </div>
+    <modalComponent :mostrar="tarefaSelecionada != null" v-if="tarefaSelecionada != null">
+        <template v-slot:cabecalho>
+            <p class="modal-card-title">Editar tarefa</p>
+            <button class="delete" aria-label="close" @click="fecharModalEdicao()"></button>
+        </template>
+        <template v-slot:corpo>
+            <div class="field">
+                <label for="descricaoTarefa" class="label">
+                    Descrição
+                </label>
+                <input type="text" class="input" v-model="tarefaSelecionada.descricao" id="descricaoTarefa">
+            </div>
+        </template>
+        <template v-slot:rodape>
+            <button class="button is-success" @click="alterarTarefa()">Salvar alterações</button>
+            <button class="button" @click="fecharModalEdicao()">Cancelar</button>
+        </template>
+    </modalComponent>
 </template>
   
 <script lang="ts">
 import { defineComponent } from 'vue';
 import FormularioTarefa from '../components/Formulario.vue';
 import TarefaComponent from '../components/Tarefa.vue';
+import ModalComponent from '@/components/Modal.vue'
 import ITarefa from '../interfaces/ITarefa';
 import BoxComponent from '../components/Box.vue';
 import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipo-acoes';
 import { computed } from 'vue';
 import { useStore } from '@/store';
-import { toHandlers } from 'vue';
 
 export default defineComponent({
     name: 'tarefasView',
@@ -47,8 +44,9 @@ export default defineComponent({
         FormularioTarefa,
         TarefaComponent,
         BoxComponent,
+        ModalComponent,
     },
-    data(){
+    data() {
         return {
             tarefaSelecionada: null as ITarefa | null,
         }
@@ -66,9 +64,9 @@ export default defineComponent({
     },
     computed: {
         listaEstaVazia(): boolean {
-            if(this.tarefas && this.tarefas.length){
+            if (this.tarefas && this.tarefas.length) {
                 return this.tarefas.length === 0;
-            }else{
+            } else {
                 return true;
             }
         }
@@ -83,15 +81,15 @@ export default defineComponent({
                 localStorage.setItem('tarefas', JSON.stringify(this.tarefas));
             }
         },
-        selecionarTarefa(tarefa: ITarefa){
+        selecionarTarefa(tarefa: ITarefa) {
             this.tarefaSelecionada = tarefa;
         },
-        fecharModalEdicao(){
+        fecharModalEdicao() {
             this.tarefaSelecionada = null;
         },
-        alterarTarefa(){
+        alterarTarefa() {
             this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
-            .then(() => this.fecharModalEdicao());
+                .then(() => this.fecharModalEdicao());
         }
     }
 });

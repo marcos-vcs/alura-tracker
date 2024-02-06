@@ -43,12 +43,18 @@ export default defineComponent({
         CronometroComponent,
         BoxComponent,
     },
-    methods: {
-        removerTarefa(): void {
-            this.$emit('removerTarefa');
+    setup(props, {emit}){
+
+        const removerTarefa = () => {
+            emit('removerTarefa');
         },
-        abrirModalEditarTarefa(): void {
-            this.$emit('aoTarefaClicada', this.dados)
+        abrirModalEditarTarefa = () => {
+            emit('aoTarefaClicada', props.dados)
+        }
+
+        return {
+            removerTarefa,
+            abrirModalEditarTarefa
         }
     }
 })

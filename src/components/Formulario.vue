@@ -29,6 +29,8 @@ import { key } from '../store/index'
 import { computed } from 'vue';
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import { notificacaoMixin } from '@/mixins/notificar';
+import { ref } from 'vue';
+import useNotificar from '@/hooks/notificador';
 
 export default defineComponent({
     name: 'FormularioTarefa',
@@ -39,27 +41,18 @@ export default defineComponent({
     components: {
         TemporizadorComponent,
     },
-    setup() {
+    setup(props, {emit}) {
+        const descricao = ref('');
+        const idProjeto = ref('');
+        const { notificar } = useNotificar();
         const store = useStore(key)
-        return {
-            store,
-            projetos: computed(
-                () => store.state.projeto.projetos
-            )
-        }
-    },
-    data() {
-        return {
-            idProjeto: '',
-            descricao: '',
-        }
-    },
-    methods: {
-        finalizarTarefa(tempoDecorrido: number): void {
-            const projeto = this.projetos.find(proj => proj.id == this.idProjeto);
+        const projetos = computed(() => store.state.projeto.projetos)
+
+        const finalizarTarefa = (tempoDecorrido: number) => {
+            const projeto = projetos.value.find(proj => proj.id == idProjeto.value);
 
             if (!projeto) {
-                this.notificar(
+                notificar(
                     TipoNotificacao.FALHA,
                     'Erro ao salvar tarefa',
                     'A tarefa deve estar vinculada a um projeto.'
@@ -67,13 +60,24 @@ export default defineComponent({
                 return;
             }
 
-            this.$emit('aoSalvarTarefa', {
+            emit('aoSalvarTarefa', {
                 duracaoEmSegundos: tempoDecorrido,
-                descricao: this.descricao,
-                projeto: this.projetos.find(proj => proj.id == this.idProjeto)
+                descricao: descricao.value,
+                projeto: projetos.value.find(proj => proj.id == idProjeto.value)
             })
-            this.descricao = '';
+            descricao.value = '';
         }
+
+        return {
+            descricao,
+            idProjeto,
+            store,
+            projetos,
+            finalizarTarefa
+        }
+    },
+    methods: {
+        
     }
 })
 </script>
