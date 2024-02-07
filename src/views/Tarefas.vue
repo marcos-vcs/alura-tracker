@@ -1,6 +1,14 @@
 <template>
     <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
     <div class="lista">
+        <div class="field">
+            <p class="control has-icons-left has-icons-left">
+                <input class="input" type="text" placeholder="Digite para filtrar" v-model="filtro">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </p>
+        </div>
         <TarefaComponent v-for="(tarefa, index) in tarefas" :key="index" :dados="tarefa"
             @removerTarefa="removerTarefa(index)" @ao-tarefa-clicada="selecionarTarefa(tarefa)" />
         <BoxComponent v-show="listaEstaVazia">
@@ -28,7 +36,7 @@
 </template>
   
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import FormularioTarefa from '../components/Formulario.vue';
 import TarefaComponent from '../components/Tarefa.vue';
 import ModalComponent from '@/components/Modal.vue'
@@ -37,6 +45,7 @@ import BoxComponent from '../components/Box.vue';
 import { ALTERAR_TAREFA, CADASTRAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/tipo-acoes';
 import { computed } from 'vue';
 import { useStore } from '@/store';
+import { watchEffect } from 'vue';
 
 export default defineComponent({
     name: 'tarefasView',
@@ -52,14 +61,19 @@ export default defineComponent({
         }
     },
     setup() {
+        const filtro = ref('')
         const store = useStore();
         store.dispatch(OBTER_TAREFAS);
         store.dispatch(OBTER_PROJETOS);
+
+        watchEffect(() => {
+            store.dispatch(OBTER_TAREFAS, filtro.value);
+        })
+
         return {
+            filtro,
             store,
-            tarefas: computed(
-                () => store.state.tarefa.tarefas
-            )
+            tarefas: computed(() => store.state.tarefa.tarefas)
         }
     },
     computed: {
